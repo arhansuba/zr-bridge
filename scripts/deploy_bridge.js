@@ -4,94 +4,48 @@ const chalk = require("chalk");
 const { config, ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
+// scripts/deploy.js
 
-const BscChainId = 3
-const EthChainId = 2
+const hre = require("hardhat");
 
-const main = async () => {
+async function main() {
+    // Get the contract factory
+    const TokenLocker = await hre.ethers.getContractFactory("TokenLocker");
+    const TokenMinter = await hre.ethers.getContractFactory("TokenMinter");
+    const ZrSignBridge = await hre.ethers.getContractFactory("ZrSignBridge");
 
-  console.log("\n\n 📡 Deploying...\n");
+    // Deploy TokenLocker contract
+    console.log("Deploying TokenLocker...");
+    const tokenLocker = await TokenLocker.deploy();
+    await tokenLocker.deployed();
+    console.log("TokenLocker deployed to:", tokenLocker.address);
 
-  /// 注意！注意！: 部署过的合约注释掉，以避免重复部署。
+    // Deploy TokenMinter contract
+    console.log("Deploying TokenMinter...");
+    const tokenMinter = await TokenMinter.deploy();
+    await tokenMinter.deployed();
+    console.log("TokenMinter deployed to:", tokenMinter.address);
 
-  // 该合约不需要参数
-  // const FISToken = await deploy("FISToken");
-  // const RFISToken = await deploy("RFISToken");
-  const BEP20FISToken = await deploy("BEP20FISToken");
+    // Deploy ZrSignBridge contract
+    console.log("Deploying ZrSignBridge...");
+    const zrSignBridge = await ZrSignBridge.deploy();
+    await zrSignBridge.deployed();
+    console.log("ZrSignBridge deployed to:", zrSignBridge.address);
 
-  /// add in constructor args like Bridge or erc20Handler
-  // const Bridge = await deploy("Bridge", [EthChainId, ["0xBd39f5936969828eD9315220659cD11129071814", "0xBca9567A9e8D5F6F58C419d32aF6190F74C880e6"], 2, 0, 100000]) // <-- add in constructor args like line 16 vvvv
-  // const ERC20Handler = await deploy("ERC20Handler", ["0xe169c92136f45617266789251Ef4EA4604Abc96c"])
-
-  console.log(
-    " 💾  Artifacts (address, abi, and args) saved to: ",
-    chalk.blue("packages/hardhat/artifacts/"),
-    "\n\n"
-  );
-};
-
-const deploy = async (contractName, _args) => {
-  console.log(` 🛰  Deploying: ${contractName}`);
-
-  const contractArgs = _args || [];
-  const contractArtifacts = await ethers.getContractFactory(contractName);
-  const deployed = await contractArtifacts.deploy(...contractArgs);
-  const encoded = abiEncodeArgs(deployed, contractArgs);
-  fs.writeFileSync(`artifacts/${contractName}.address`, deployed.address);
-
-  console.log(
-    " 📄",
-    chalk.cyan(contractName),
-    "deployed to:",
-    chalk.magenta(deployed.address),
-  );
-
-  if (!encoded || encoded.length <= 2) return deployed;
-  fs.writeFileSync(`artifacts/${contractName}.args`, encoded.slice(2));
-
-  return deployed;
-};
-
-// ------ utils -------
-
-// abi encodes contract arguments
-// useful when you want to manually verify the contracts
-// for example, on Etherscan
-const abiEncodeArgs = (deployed, contractArgs) => {
-  // not writing abi encoded args if this does not pass
-  if (
-    !contractArgs ||
-    !deployed ||
-    !R.hasPath(["interface", "deploy"], deployed)
-  ) {
-    return "";
-  }
-  const encoded = utils.defaultAbiCoder.encode(
-    deployed.interface.deploy.inputs,
-    contractArgs
-  );
-  return encoded;
-};
-
-// checks if it is a Solidity file
-const isSolidity = (fileName) =>
-  fileName.indexOf(".sol") >= 0 && fileName.indexOf(".swp") < 0;
-
-const readArgsFile = (contractName) => {
-  let args = [];
-  try {
-    const argsFile = `./contracts/${contractName}.args`;
-    if (!fs.existsSync(argsFile)) return args;
-    args = JSON.parse(fs.readFileSync(argsFile));
-  } catch (e) {
-    console.log(e);
-  }
-  return args;
-};
+    // Optionally, you can save the deployed contract addresses to a file
+    const fs = require('fs');
+    const addresses = {
+        TokenLocker: tokenLocker.address,
+        TokenMinter: tokenMinter.address,
+        ZrSignBridge: zrSignBridge.address,
+    };
+    fs.writeFileSync('deployed-addresses.json', JSON.stringify(addresses, null, 2));
+}
 
 main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+    .then(() => process.exit(0))
+    .catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });
+
