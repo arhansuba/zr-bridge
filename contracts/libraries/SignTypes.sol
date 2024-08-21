@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
-
+pragma solidity ^0.8.0;
 library SignTypes {
     struct ZrKeyReqParams {
         bytes32 walletTypeId;
