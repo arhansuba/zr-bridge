@@ -11,7 +11,7 @@ import "./ERC721MinterBurnerPauser.sol";
     @notice This contract is intended to be used with ERC721Handler contract.
  */
 contract ERC721Safe {
-    using SafeMath for uint256;
+
 
     /**
         @notice Used to gain custoday of deposited token.

@@ -4,16 +4,63 @@ pragma solidity ^0.8.0;
 
 import "./utils/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/presets/ERC20PresetMinterPauser.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
+//import "@openzeppelin/contracts/presets/ERC20PresetMinterPauser.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
 /**
     @title Manages deposited ERC20s.
     @author Stafi Protocol.
     @notice This contract is intended to be used with ERC20Handler contract.
  */
+library SafeMath {
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a + b;
+        require(c >= a, "SafeMath: addition overflow");
+        return c;
+    // Remove the extra closing brace
+
+    function subtract(uint256 a, uint256 b) internal pure returns (uint256) {
+        // Add the opening brace here
+        require(b <= a, "SafeMath: subtraction overflow");
+        uint256 c = a - b;
+        return c;
+    }
+        // Add the opening brace here
+        require(b <= a, "SafeMath: subtraction overflow");
+        uint256 c = a - b;
+        return c;
+    }
+
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        if (a == 0) {
+            return 0;
+        }
+        uint256 c = a * b;
+        require(c / a == b, "SafeMath: multiplication overflow");
+        return c;
+    }
+
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        require(b > 0, "SafeMath: division by zero");
+        uint256 c = a / b;
+        return c;
+    }
+}
+
+library Address {
+    function isContract(address account) internal view returns (bool) {
+        uint256 size;
+        assembly {
+            size := extcodesize(account)
+        }
+        return size > 0;
+    }
+}
+
 contract ERC20Safe {
     using SafeMath for uint256;
+    using Address for address;
+}
 
     /**
         @notice Used to gain custody of deposited token.
@@ -45,9 +92,8 @@ contract ERC20Safe {
         @param amount Amount of token to mint.
      */
     function mintERC20(address tokenAddress, address recipient, uint256 amount) internal {
-        ERC20PresetMinterPauser erc20 = ERC20PresetMinterPauser(tokenAddress);
+        IERC20 erc20 = IERC20(tokenAddress);
         erc20.mint(recipient, amount);
-
     }
 
     /**
