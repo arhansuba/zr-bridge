@@ -88,6 +88,9 @@ contract GenericHandler is IGenericHandler {
         @return Returns the raw bytes returned from the call to {contractAddress}.
      */
     function deposit(bytes32 resourceID, address depositer, bytes calldata data) external onlyBridge returns (bytes memory) {
+    if (!_contractWhitelist[_resourceIDToContractAddress[resourceID]]) {
+        return bytes("");
+    }
         uint256      lenMetadata;
         bytes memory metadata;
 

@@ -2,13 +2,13 @@
 pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "./utils/AccessControl.sol";
-import "./utils/Pausable.sol";
-import "./utils/SafeMath.sol";
-import "./utils/SafeCast.sol";
-import "./interfaces/IDepositExecute.sol";
-import "./interfaces/IERCHandler.sol";
-import "./interfaces/IGenericHandler.sol";
+import "../utils/AccessControl.sol";
+import "../utils/Pausable.sol";
+import "../utils/SafeMath.sol";
+import "../utils/SafeCast.sol";
+import "../interfaces/IDepositExecute.sol";
+import "../interfaces/IERCHandler.sol";
+import "../interfaces/IGenericHandler.sol";
 
 /**
     @title Facilitates deposits, creation and voting of deposit proposals, and deposit executions.
