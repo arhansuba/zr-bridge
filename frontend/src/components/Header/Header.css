@@ -1,0 +1,83 @@
+/* Container for the header */
+.header {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #007bff; /* Primary color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logo styling */
+.header-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+/* Navigation menu */
+.navbar {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect for menu items */
+.navbar a:hover {
+    color: #ffdd57; /* Highlight color */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        background-color: #007bff;
+        padding: 10px;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        display: none; /* Hidden by default */
+    }
+
+    .navbar.active {
+        display: flex; /* Show when active */
+    }
+}
+
+/* Menu button for mobile */
+.menu-button {
+    display: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 24px;
+    border: none;
+    background: none;
+}
+
+@media (max-width: 768px) {
+    .menu-button {
+        display: block;
+    }
+}

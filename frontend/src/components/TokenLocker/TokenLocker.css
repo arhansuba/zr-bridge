@@ -1,0 +1,115 @@
+/* Container for the token locker component */
+.token-locker-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Title styling */
+.token-locker-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input group styling */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Label styling */
+.input-group label {
+    display: block;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* Input field styling */
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+/* Input hover and focus effect */
+.input-group input[type="number"]:hover,
+.input-group input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Lock button styling */
+.lock-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Lock button hover effect */
+.lock-button:hover {
+    background-color: #218838;
+}
+
+/* Alert styling for messages */
+.alert {
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.alert.success {
+    color: #4CAF50;
+    background-color: #dff0d8;
+}
+
+.alert.error {
+    color: #f44336;
+    background-color: #f2dede;
+}
+
+/* Locked balance section styling */
+.locked-info {
+    margin-top: 20px;
+}
+
+.locked-info h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.locked-info p {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .token-locker-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .lock-button {
+        font-size: 16px;
+    }
+}
